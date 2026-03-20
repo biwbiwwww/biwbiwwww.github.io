@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Eid Mubarak</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=SF+Pro+Display:wght@300;400;600;800&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-base: #0a0a0c; 
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1a6;
+            --gold: #e2c073; 
+            --gold-light: #f7e1a0; 
+            --liquid-1: rgba(226, 192, 115, 0.15);
+            --liquid-2: rgba(161, 161, 166, 0.1);
+            --glass: rgba(30, 30, 32, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --apple-ease: cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-base); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2); 
+            border-radius: 10px;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: var(--bg-base);
+            padding: 60px 20px 100px 20px;
+            overflow-x: hidden; 
+            overflow-y: auto;
+            position: relative;
+            color: var(--text-main);
+        }
+
+        .background-wrapper {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .liquid-blob {
+            position: absolute;
+            filter: blur(60px);
+            z-index: 1;
+            animation: blobLiquid 20s var(--apple-ease) infinite alternate;
+        }
+
+        .blob-1 {
+            top: 5%; left: 15%;
+            width: 400px; height: 400px;
+            background: var(--liquid-1);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+
+        .blob-2 {
+            bottom: 5%; right: 10%;
+            width: 500px; height: 500px;
+            background: var(--liquid-2);
+            border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes blobLiquid {
+            0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: scale(1) translate(0, 0) rotate(0deg); }
+            50% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; transform: scale(1.05) translate(30px, -30px) rotate(20deg); }
+            100% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; transform: scale(0.95) translate(-30px, 30px) rotate(-10deg); }
+        }
+
+        .floating-element {
+            position: absolute;
+            z-index: 2;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .ketupat-icon {
+            color: var(--text-muted);
+            animation: float 12s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+        }
+
+        .royal-card {
+            background: var(--glass);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 36px;
+            padding: 50px 40px;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            z-index: 10;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(10px);
+            animation: appleReveal 1.2s var(--apple-ease) forwards 0.2s;
+            transition: height 0.8s var(--apple-ease);
+        }
+
+        @keyframes appleReveal {
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        h1.title {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-main);
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        h2.hijri {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 35px;
+        }
+
+        #greeting-text-container {
+            min-height: 100px;
+            margin-bottom: 30px;
+        }
+
+        p.greeting-typed {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 300;
+            display: inline-block;
+        }
+
+        .question-box {
+            opacity: 0;
+            transform: translateY(10px);
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.8s var(--apple-ease);
+            margin-bottom: 0;
+        }
+
+        .question-box.show {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 150px; 
+            margin-bottom: 20px;
+        }
+
+        .question-box.hide-smooth {
+            opacity: 0;
+            transform: scale(0.95);
+            max-height: 0;
+            margin-bottom: 0;
+            pointer-events: none;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 40px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.4s var(--apple-ease);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .btn-yes {
+            background: var(--text-main);
+            color: var(--bg-base);
+            z-index: 2;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.05);
+            background: var(--gold);
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative; 
+            z-index: 3;
+        }
+
+        .thr-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
+            padding: 0 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(20px) scale(0.95);
+            overflow: hidden;
+            transition: all 1s var(--apple-ease);
+        }
+
+        .thr-section.show {
+            opacity: 1;
+            max-height: 500px; 
+            transform: translateY(0) scale(1);
+            padding: 30px;
+            margin-top: 10px;
+        }
+
+        .thr-header p {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 15px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .qris-frame {
+            position: relative;
+            display: inline-block;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+            transition: transform 0.5s var(--apple-ease);
+        }
+
+        .qris-frame:hover {
+            transform: scale(1.02) translateY(-5px);
+        }
+
+        .qris-frame img.qris {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .thr-call-to-action {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <div class="liquid-blob blob-1"></div>
+        <div class="liquid-blob blob-2"></div>
+    </div>
+
+    <div class="royal-card">
+        <h1 class="title">Happy Eid Mubarak.</h1>
+        <h2 class="hijri">1447H</h2>
+
+        <div id="greeting-text-container">
+            <p class="greeting-typed" id="typed-text"></p>
+        </div>
+        
+        <div class="question-box" id="question-box">
+            <p class="question-text">Dimaafin kan yaaaaaa??</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" id="btn-yes">Iyaa</button>
+                <button class="btn btn-no" id="btn-no">Ga</button>
+            </div>
+        </div>
+
+        <div class="thr-section" id="thr-section">
+            <div class="thr-header">
+                <p>Thanks yh btw pinjam dulu seratus</p>
+            </div>
+            <div class="qris-frame">
+                <img src="qris.png" alt="QRIS" class="qris">
+            </div>
+            <p class="thr-call-to-action">Sebuah ruang kecil untuk merajut silaturahmi<br>dan berbagi apresiasi di hari kemenangan.</p>
+        </div>
+    </div>
+
+    <script>
+        const bgWrapper = document.querySelector('.background-wrapper');
+        const scrollHeight = Math.max(document.body.scrollHeight, window.innerHeight * 2);
+        
+        for (let i = 0; i < 20; i++) {
+            const el = document.createElement('div');
+            el.classList.add('floating-element');
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = Math.random() * scrollHeight + 'px';
+            
+            const icon = document.createElement('i');
+            const icons = ['fa-star', 'fa-moon', 'fa-circle'];
+            icon.classList.add('fas', icons[Math.floor(Math.random() * icons.length)], 'ketupat-icon');
+            icon.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
+            icon.style.animationDuration = (Math.random() * 15 + 10) + 's';
+
+            el.appendChild(icon);
+            bgWrapper.appendChild(el);
+        }
+
+        const textToType = "Di antara langkah yang mungkin pernah salah arah, dan lisan yang tak sengaja menoreh luka, mari kembali menyatukan rasa. Selamat Hari Raya Idul Fitri. Mohon maaf lahir dan batin untuk segala khilaf yang ada.";
+        const typedTextElement = document.getElementById('typed-text');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < textToType.length) {
+                typedTextElement.textContent += textToType.charAt(index);
+                index++;
+                setTimeout(typeWriter, 30);
+            } else {
+                setTimeout(() => {
+                    const qBox = document.getElementById('question-box');
+                    qBox.classList.add('show');
+                    
+                    setTimeout(() => {
+                        qBox.style.overflow = 'visible';
+                    }, 800);
+                    
+                }, 400);
+            }
+        }
+        
+        setTimeout(typeWriter, 1400);
+
+        const btnNo = document.getElementById('btn-no');
+        
+        function moveButton() {
+            const x = Math.random() * 120 - 60; 
+            const y = Math.random() * 80 - 40;  
+            btnNo.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        btnNo.addEventListener('mouseover', moveButton);
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault(); 
+            moveButton();
+        });
+
+        const btnYes = document.getElementById('btn-yes');
+        const questionBox = document.getElementById('question-box');
+        const thrSection = document.getElementById('thr-section');
+
+        function fireAppleConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#e2c073', '#ffffff', '#a1a1a6'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#e2c073', '#ffffff', '#a1a1a6'] }));
+            }, 250);
+        }
+
+        btnYes.addEventListener('click', () => {
+            questionBox.style.overflow = 'hidden';
+            questionBox.classList.remove('show');
+            questionBox.classList.add('hide-smooth');
+            
+            setTimeout(() => {
+                thrSection.classList.add('show');
+                
+                fireAppleConfetti();
+
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: document.body.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }, 300);
+
+            }, 500); 
+        });
+
+    </script>
+</body>
+</html>
